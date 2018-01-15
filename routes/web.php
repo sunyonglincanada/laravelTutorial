@@ -12,14 +12,20 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+// Authentication Scaffolding
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Posts
+Route::get('/', 'PostsController@index');
+Route::get('/posts/{post}', 'PostsController@show');
 
 // Tasks
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
