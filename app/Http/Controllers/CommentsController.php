@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Post;
 use Illuminate\Http\Request;
 
 class CommentsController extends Controller
@@ -27,14 +29,21 @@ class CommentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Post $post)
     {
-        //
+
+        $this->validate(request(), [
+            'body'  => 'required|min:2',
+        ]);
+
+        $post->addComment(request('body'));
+
+        return back();
     }
 
     /**
