@@ -1,0 +1,1 @@
+<h1>This is comment template {{ $user->name }}</h1>

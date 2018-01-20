@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CommentsController extends Controller
 {
@@ -42,6 +43,10 @@ class CommentsController extends Controller
         ]);
 
         $post->addComment(request('body'));
+
+
+        // Send an email to post author about new comments.
+        Mail::to($post->user)->send(new \App\Mail\Comment($post->user));
 
         return back();
     }
