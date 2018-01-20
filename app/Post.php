@@ -45,6 +45,11 @@ class Post extends Model
     }
 
 
+    /**
+     * Filter Archive Url Params
+     * @param $query
+     * @param $filters
+     */
     public function scopeFilter($query, $filters)
     {
         if(empty($filters)){
@@ -63,6 +68,15 @@ class Post extends Model
             $query->whereYear('created_at', $year);
 
         }
+    }
+
+    public static function archives()
+    {
+        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+            ->groupBy('year', 'month')
+            ->orderByRaw('min(created_at) desc')
+            ->get()
+            ->toArray();
     }
 
 }
