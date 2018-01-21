@@ -29,6 +29,9 @@ Route::get('/', 'PostsController@index');
 //Route::post('/posts', 'PostsController@store');
 Route::resource('posts', 'PostsController');
 
+// Posts Tags
+Route::get('/posts/tags/{tag}', 'TagsController@index');
+
 // Tasks
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');

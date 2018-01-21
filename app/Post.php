@@ -70,6 +70,10 @@ class Post extends Model
         }
     }
 
+    /**
+     * Filter posts through date
+     * @return mixed
+     */
     public static function archives()
     {
         return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
@@ -77,6 +81,16 @@ class Post extends Model
             ->orderByRaw('min(created_at) desc')
             ->get()
             ->toArray();
+    }
+
+    // Any post have many tags, any tag can have many posts
+    /**
+     * Build the relationship between posts and tags($post->tags)
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
 }
